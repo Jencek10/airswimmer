@@ -2,12 +2,9 @@ package com.example.teaching.project7
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.SeekBar
 import kotlinx.android.synthetic.main.activity_main.*
-import java.sql.DriverManager.getConnection
-import android.widget.Toast
-import android.widget.SeekBar.OnSeekBarChangeListener
-
+import android.util.Log
+import android.widget.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -26,33 +23,68 @@ class MainActivity : AppCompatActivity() {
             if(!ble.canSendData())
                 return@setOnClickListener;
 
+
             ble.sendData("r")
         }
 
-        var speed = 0
-findViewById<SeekBar>(R.id.seekBar).setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
 
-    override fun onStopTrackingTouch(seekBar: SeekBar) {
-        if (speed < 20){
-            ble.sendData("s")
-            ble.sendData("x")
+        val seekBarLeft = findViewById<SeekBar>(R.id.seekBarLeft) as SeekBar
+        seekBarLeft.progress = 0
+        seekBarLeft.incrementProgressBy(51)
+        seekBarLeft.max = 255
+        val seekBarValue = findViewById<TextView>(R.id.lblInfo) as TextView
+       // seekBarValue.setText(tvRadius.getText().toString().trim())
+
+        seekBarLeft.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                var progress = progress
+                progress = progress / 51
+                progress = progress * 51
+                seekBarValue.text = progress.toString()
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar) {
+
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+
+            }
+        })
+
+        val button = findViewById<Button>(R.id.sendData) as Button
+
+        button.setOnClickListener {
+            if(!ble.canSendData())
+                return@setOnClickListener;
+
+
+            Log.d("BLE", "PRogress BAR:   " + seekBarLeft.progress.toString());
+
+            if (seekBarLeft.progress == 0){
+                Log.d("BLE", "f");
+                ble.sendData("f")
+            } else if (seekBarLeft.progress == 51){
+                Log.d("BLE", "g");
+                ble.sendData("g")
+            } else if (seekBarLeft.progress == 102){
+                ble.sendData("h")
+            }
+            else if (seekBarLeft.progress == 153){
+                ble.sendData("j")
+            }
+           else if (seekBarLeft.progress == 204){
+            ble.sendData("k")
+            }
+            else if (seekBarLeft.progress == 255){
+                ble.sendData("l")
+            }
+
+
+
+
         }
-    }
-
-    override fun onStartTrackingTouch(seekBar: SeekBar) {
-        // TODO Auto-generated method stub
-    }
-
-    override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-        // TODO Auto-generated method stub
-        if (speed != progress){
-            speed = progress
-        }
-        // progres je od 0-100 u seekbaru, speed musi byt pro S nebo X u u/D motoru
-        Toast.makeText(applicationContext, progress.toString(), Toast.LENGTH_LONG).show()
-
-    }
-})
 
     }
 
