@@ -14,26 +14,29 @@
         android:text="Hello World!"
         />
 
-    <Button
-        android:id="@+id/btnTest"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Start"
-         />
-
 
     <SeekBar
         android:id="@+id/seekBarLeft"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:max="120"
+        android:max="6"
         />
 
-    <Button
-        android:id="@+id/sendData"
+    <SeekBar
+        android:id="@+id/seekBarUD"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="SendDATA"
-         />
+        android:max="6"
+        android:progress="3" />
+
+    <SeekBar
+        android:id="@+id/seekBarRight"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="6"
+        android:progress="3" />
 
 </LinearLayout>

@@ -17,74 +17,59 @@ class MainActivity : AppCompatActivity() {
 
         ble = BLEConnection()
         getConnection()
-
-
-        btnTest.setOnClickListener {
-            if(!ble.canSendData())
-                return@setOnClickListener;
-
-
-            ble.sendData("r")
-        }
-
-
-        val seekBarLeft = findViewById<SeekBar>(R.id.seekBarLeft) as SeekBar
         seekBarLeft.progress = 0
-        seekBarLeft.incrementProgressBy(51)
-        seekBarLeft.max = 255
-        val seekBarValue = findViewById<TextView>(R.id.lblInfo) as TextView
-       // seekBarValue.setText(tvRadius.getText().toString().trim())
+        seekBarLeft.incrementProgressBy(1)
+        seekBarLeft.max = 5
+
+        seekBarUD.progress = 0
+        seekBarUD.incrementProgressBy(1)
+        seekBarUD.max = 5
+
+        seekBarRight.progress = 0
+        seekBarRight.incrementProgressBy(1)
+        seekBarRight.max = 5
+
+
+
 
         seekBarLeft.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
 
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                var progress = progress
-                progress = progress / 51
-                progress = progress * 51
-                seekBarValue.text = progress.toString()
+                lblInfo.text = progress.toString()
+
+                val d = ByteArray(1)
+                d[0] = progress.toByte()
+                ble.sendData(d)
             }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar) {
-
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar) {
-
-            }
+            override fun onStartTrackingTouch(seekBar: SeekBar) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar) { }
         })
 
-        val button = findViewById<Button>(R.id.sendData) as Button
+        seekBarUD.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
 
-        button.setOnClickListener {
-            if(!ble.canSendData())
-                return@setOnClickListener;
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                lblInfo.text = progress.toString()
 
-
-            Log.d("BLE", "PRogress BAR:   " + seekBarLeft.progress.toString());
-
-            if (seekBarLeft.progress == 0){
-                Log.d("BLE", "f");
-                ble.sendData("f")
-            } else if (seekBarLeft.progress == 51){
-                Log.d("BLE", "g");
-                ble.sendData("g")
-            } else if (seekBarLeft.progress == 102){
-                ble.sendData("h")
+                val d = ByteArray(1)
+                d[0] = (progress+10).toByte()
+                ble.sendData(d)
             }
-            else if (seekBarLeft.progress == 153){
-                ble.sendData("j")
+            override fun onStartTrackingTouch(seekBar: SeekBar) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar) { }
+        })
+
+        seekBarRight.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                lblInfo.text = progress.toString()
+
+                val d = ByteArray(1)
+                d[0] = (progress+20).toByte()
+                ble.sendData(d)
             }
-           else if (seekBarLeft.progress == 204){
-            ble.sendData("k")
-            }
-            else if (seekBarLeft.progress == 255){
-                ble.sendData("l")
-            }
-
-
-
-
-        }
+            override fun onStartTrackingTouch(seekBar: SeekBar) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar) { }
+        })
 
     }
 
