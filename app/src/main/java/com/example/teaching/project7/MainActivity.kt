@@ -5,6 +5,7 @@ import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_main.*
 import android.util.Log
 import android.widget.*
+import kotlinx.android.synthetic.main.activity_main.view.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -35,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         seekBarLeft.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
 
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                lblInfo.text = progress.toString()
+                txtL.text = progress.toString()
 
                 val d = ByteArray(1)
                 d[0] = progress.toByte()
@@ -48,7 +49,7 @@ class MainActivity : AppCompatActivity() {
         seekBarUD.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
 
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                lblInfo.text = progress.toString()
+                txtUD.text = progress.toString()
 
                 val d = ByteArray(1)
                 d[0] = (progress+10).toByte()
@@ -61,7 +62,7 @@ class MainActivity : AppCompatActivity() {
         seekBarRight.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
 
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                lblInfo.text = progress.toString()
+                txtR.text = progress.toString()
 
                 val d = ByteArray(1)
                 d[0] = (progress+20).toByte()
@@ -73,6 +74,25 @@ class MainActivity : AppCompatActivity() {
 
         btnBT.setOnClickListener(){
             getConnection()
+        }
+
+        btnForward.setOnClickListener() {
+            val d = ByteArray(1)
+            d[0] = 30.toByte()
+            ble.sendData(d)
+                    }
+        btnLeft.setOnClickListener(){
+            val d = ByteArray(1)
+            d[0] = 25.toByte()
+            ble.sendData(d)
+
+        }
+
+        btnRight.setOnClickListener(){
+            val d = ByteArray(1)
+            d[0] = 5.toByte()
+            ble.sendData(d)
+
         }
 
     }
