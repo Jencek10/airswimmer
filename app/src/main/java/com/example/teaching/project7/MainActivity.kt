@@ -71,6 +71,10 @@ class MainActivity : AppCompatActivity() {
             override fun onStopTrackingTouch(seekBar: SeekBar) { }
         })
 
+        btnBT.setOnClickListener(){
+            getConnection()
+        }
+
     }
 
     private fun getConnection()
