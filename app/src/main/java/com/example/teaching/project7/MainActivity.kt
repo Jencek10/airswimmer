@@ -95,6 +95,14 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+        btnStop.setOnClickListener() {
+            val d = ByteArray(1)
+            d[0] = 31.toByte()
+            ble.sendData(d)
+            
+
+        }
+
     }
 
     private fun getConnection()
