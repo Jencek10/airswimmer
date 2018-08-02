@@ -99,7 +99,14 @@ class MainActivity : AppCompatActivity() {
             val d = ByteArray(1)
             d[0] = 31.toByte()
             ble.sendData(d)
-            
+
+
+        }
+        btnLow.setOnClickListener() {
+            val d = ByteArray (1)
+            d [0] = 32
+            ble.sendData(d)
+
 
         }
 
